@@ -39,17 +39,24 @@ public class Event {
     @Column(nullable = true, length = 50)
     private String location;
 
+    @Column(nullable = true, length = 50)
+    private String link;
+
+    @Column(nullable = true)
+    private ZonedDateTime dateTime;
+
     @Column(nullable = true)
     private ZonedDateTime dateCreated;
 
     public Event(EventDTO event) {
-        this.id = event.getId();
         this.name = event.getName();
         this.artist = event.getArtist();
         this.photo = event.getPhoto();
         this.description = event.getDescription();
         this.city = event.getCity();
         this.location = event.getLocation();
+        this.link = event.getLink();
+        this.dateTime = event.getDateTime();
     }
 
     @PrePersist
