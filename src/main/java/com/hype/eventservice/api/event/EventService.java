@@ -20,6 +20,7 @@ public class EventService {
 
     public List<EventDTO> findAllEvents() {
         final var events = repository.findAll();
+        repository.resetConnect();
 
         return events.stream().map(event -> new EventDTO(event))
                 .collect(Collectors.toList());
@@ -27,6 +28,7 @@ public class EventService {
 
     public EventDTO findEventById(BigInteger eventId) {
         var event = repository.findById(eventId);
+        repository.resetConnect();
 
         if (event.isPresent()) {
             return new EventDTO(event.get());
@@ -39,6 +41,8 @@ public class EventService {
         final var event = new Event(eventDTO);
 
         repository.save(event);
+        repository.resetConnect();
+
         return eventDTO;
     }
 
@@ -46,6 +50,8 @@ public class EventService {
         final var event = new Event(eventDTO);
 
         repository.saveAndFlush(event);
+        repository.resetConnect();
+
         return eventDTO;
     }
 
@@ -53,6 +59,8 @@ public class EventService {
         final var event = new Event(eventDTO);
 
         repository.delete(event);
+        repository.resetConnect();
+
         return eventDTO;
     }
 }
