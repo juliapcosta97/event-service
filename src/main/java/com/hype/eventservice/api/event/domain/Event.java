@@ -21,10 +21,10 @@ public class Event {
     @Column(columnDefinition = "serial")
     private BigInteger id;
 
-    @Column(nullable = true, length = 50)
+    @Column(nullable = true)
     private String name;
 
-    @Column(nullable = true, length = 50)
+    @Column(nullable = true)
     private String artist;
 
     @Column(nullable = true)
@@ -33,13 +33,13 @@ public class Event {
     @Column(nullable = true)
     private String description;
 
-    @Column(nullable = true, length = 50)
+    @Column(nullable = true)
     private String city;
 
-    @Column(nullable = true, length = 50)
+    @Column(nullable = true)
     private String location;
 
-    @Column(nullable = true, length = 50)
+    @Column(nullable = true)
     private String link;
 
     @Column(nullable = true)
