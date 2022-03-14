@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigInteger;
 import java.time.ZonedDateTime;
 
 @Data
@@ -12,6 +13,7 @@ import java.time.ZonedDateTime;
 @NoArgsConstructor
 public class EventDTO {
 
+    private BigInteger id;
     private String name;
     private String artist;
     private String photo;
@@ -22,6 +24,7 @@ public class EventDTO {
     private ZonedDateTime dateTime;
 
     public EventDTO(Event event){
+        this.id = event.getId();
         this.name = event.getName();
         this.artist = event.getArtist();
         this.photo = event.getPhoto();
@@ -31,5 +34,4 @@ public class EventDTO {
         this.link = event.getLink();
         this.dateTime = event.getDateTime();
     }
-
 }

@@ -5,7 +5,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.PrePersist;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Column;
 import java.math.BigInteger;
 import java.time.ZonedDateTime;
 
@@ -21,22 +27,22 @@ public class Event {
     @Column(columnDefinition = "serial")
     private BigInteger id;
 
-    @Column(nullable = true)
+    @Column(nullable = false)
     private String name;
 
-    @Column(nullable = true)
+    @Column(nullable = false)
     private String artist;
 
     @Column(nullable = true)
     private String photo;
 
-    @Column(nullable = true)
+    @Column(nullable = false)
     private String description;
 
-    @Column(nullable = true)
+    @Column(nullable = false)
     private String city;
 
-    @Column(nullable = true)
+    @Column(nullable = false)
     private String location;
 
     @Column(nullable = true)
@@ -45,8 +51,17 @@ public class Event {
     @Column(nullable = true)
     private ZonedDateTime dateTime;
 
-    @Column(nullable = true)
+    @Column(nullable = false)
     private ZonedDateTime dateCreated;
+
+    @Column(nullable = false)
+    private ZonedDateTime dateUpdated;
+
+    @PrePersist
+    public void preCreate() {
+        ZonedDateTime now = ZonedDateTime.now();
+        this.setDateCreated(now);
+    }
 
     public Event(EventDTO event) {
         this.name = event.getName();
@@ -57,11 +72,6 @@ public class Event {
         this.location = event.getLocation();
         this.link = event.getLink();
         this.dateTime = event.getDateTime();
-    }
-
-    @PrePersist
-    public void preCreate() {
-        ZonedDateTime now = ZonedDateTime.now();
-        this.setDateCreated(now);
+        this.dateUpdated = ZonedDateTime.now();
     }
 }
