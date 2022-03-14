@@ -37,6 +37,7 @@ public class EventService {
         try {
             var events = repository.findAll();
             actionRepository.save(new Action(GET_LIST));
+            repository.resetConnect();
 
             return events.stream().map(event -> new EventDTO(event))
                     .collect(Collectors.toList());
@@ -50,6 +51,7 @@ public class EventService {
             var event = repository.findById(eventId);
             var action = new Action(GET_BY_ID);
             actionRepository.save(action);
+            repository.resetConnect();
 
             return new EventDTO(event.get());
         } catch (Exception ex) {
@@ -61,6 +63,7 @@ public class EventService {
         try {
             var event = new Event(eventDTO);
             repository.save(event);
+            repository.resetConnect();
 
             return new ResponseDTO(CREATE_STATUS, CREATE_MESSAGE);
         } catch (Exception ex) {
@@ -72,6 +75,7 @@ public class EventService {
         try {
             var event = new Event(eventDTO);
             repository.saveAndFlush(event);
+            repository.resetConnect();
 
             return new ResponseDTO(UPDATE_STATUS, UPDATE_MESSAGE);
         } catch (Exception ex) {
@@ -83,6 +87,7 @@ public class EventService {
         try {
             var event = new Event(eventDTO);
             repository.delete(event);
+            repository.resetConnect();
 
             return new ResponseDTO(DELETE_STATUS, DELETE_MESSAGE);
         } catch (Exception ex) {
