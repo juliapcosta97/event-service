@@ -1,5 +1,6 @@
 package com.hype.eventservice.api.event.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.hype.eventservice.api.event.domain.Event;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,6 +22,8 @@ public class EventDTO {
     private String city;
     private String location;
     private String link;
+
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private ZonedDateTime dateTime;
 
     public EventDTO(Event event){
