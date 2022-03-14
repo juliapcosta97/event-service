@@ -20,14 +20,14 @@ public class EventController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<List<EventDTO>> findEvents() {
+    public ResponseEntity<List<EventDTO>> findAllEvents() {
         final var response = service.findAllEvents();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/{eventId}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<EventDTO> findAllArtists(@PathVariable BigInteger eventId) {
+    public ResponseEntity<EventDTO> findEventById(@PathVariable BigInteger eventId) {
         final var response = service.findEventById(eventId);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

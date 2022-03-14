@@ -1,1 +1,2 @@
-/Users/jupereira/Workspace/event-service/src/test/java/com/hype/eventservice/EventServiceApplicationTests.java
+/Users/jupereira/Workspace/event-service/src/test/java/com/hype/eventservice/api/event/EventServiceTest.java
+/Users/jupereira/Workspace/event-service/src/test/java/com/hype/eventservice/api/event/EventControllerTest.java
