@@ -24,7 +24,6 @@ public class Event {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(columnDefinition = "serial")
     private BigInteger id;
 
     @Column(nullable = false)

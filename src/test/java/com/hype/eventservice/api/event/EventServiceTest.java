@@ -110,6 +110,7 @@ public class EventServiceTest {
 
     @Test
     public void shouldReturnOk_WhenDeleteEvent(){
+        when(this.eventRepository.findById(BigInteger.ONE)).thenReturn(Optional.of(event));
 
         var actual = service.deleteEvent(eventDTO);
 

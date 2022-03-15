@@ -75,10 +75,26 @@ public class EventService {
     public RestResponseDTO updateEvent(EventRequestDTO eventDTO) {
         try {
             var event = new Event(eventDTO);
-            repository.saveAndFlush(event);
+            repository.save(event);
             repository.resetConnect();
 
-            return new RestResponseDTO(UPDATE_STATUS, UPDATE_MESSAGE);
+            var updateResponse = repository.findById(eventDTO.getId())
+                    .map(record -> {
+                        record.setName(eventDTO.getName());
+                        record.setName(event.getName());
+                        record.setArtist(event.getArtist());
+                        record.setPhoto(event.getPhoto());
+                        record.setDescription(event.getDescription());
+                        record.setCity(event.getCity());
+                        record.setLocation(event.getLocation());
+                        record.setLink(event.getLink());
+                        record.setDateTime(event.getDateTime());
+                        repository.save(record);
+
+                        return new RestResponseDTO(UPDATE_STATUS, UPDATE_MESSAGE);
+                    });
+
+            return updateResponse.get();
         } catch (Exception ex) {
             throw new RuntimeException(ERROR_MESSAGE, ex);
         }
@@ -86,8 +102,8 @@ public class EventService {
 
     public RestResponseDTO deleteEvent(EventRequestDTO eventDTO) {
         try {
-            var event = new Event(eventDTO);
-            repository.delete(event);
+            var event = repository.findById(eventDTO.getId());
+            repository.delete(event.get());
             repository.resetConnect();
 
             return new RestResponseDTO(DELETE_STATUS, DELETE_MESSAGE);

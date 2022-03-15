@@ -49,7 +49,7 @@ public class EventController {
 
     @DeleteMapping
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<RestResponseDTO> deleteEvent(@PathVariable EventRequestDTO eventDTO) {
+    public ResponseEntity<RestResponseDTO> deleteEvent(@RequestBody EventRequestDTO eventDTO) {
         final var response = service.deleteEvent(eventDTO);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
