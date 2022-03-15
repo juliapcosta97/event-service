@@ -3,7 +3,7 @@ package com.hype.eventservice.api.event;
 import com.hype.eventservice.api.action.domain.ActionRepository;
 import com.hype.eventservice.api.event.domain.Event;
 import com.hype.eventservice.api.event.domain.EventRepository;
-import com.hype.eventservice.api.event.dto.EventDTO;
+import com.hype.eventservice.api.event.dto.EventRequestDTO;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -32,7 +32,7 @@ public class EventServiceTest {
     List<Event> events;
 
     @Mock
-    EventDTO eventDTO;
+    EventRequestDTO eventDTO;
 
     @Mock
     Event event;

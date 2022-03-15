@@ -1,13 +1,10 @@
 package com.hype.eventservice.api.event.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.hype.eventservice.api.event.domain.Event;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigInteger;
-import java.time.ZonedDateTime;
 
 @Data
 @AllArgsConstructor
@@ -22,19 +19,4 @@ public class EventDTO {
     private String city;
     private String location;
     private String link;
-
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    private ZonedDateTime dateTime;
-
-    public EventDTO(Event event){
-        this.id = event.getId();
-        this.name = event.getName();
-        this.artist = event.getArtist();
-        this.photo = event.getPhoto();
-        this.description = event.getDescription();
-        this.city = event.getCity();
-        this.location = event.getLocation();
-        this.link = event.getLink();
-        this.dateTime = event.getDateTime();
-    }
 }

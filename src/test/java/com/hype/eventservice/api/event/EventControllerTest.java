@@ -1,7 +1,8 @@
 package com.hype.eventservice.api.event;
 
-import com.hype.eventservice.api.event.dto.EventDTO;
-import com.hype.eventservice.api.event.dto.ResponseDTO;
+import com.hype.eventservice.api.event.dto.EventRequestDTO;
+import com.hype.eventservice.api.event.dto.EventResponseDTO;
+import com.hype.eventservice.api.event.dto.RestResponseDTO;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -24,13 +25,16 @@ public class EventControllerTest {
     EventService eventService;
 
     @Mock
-    List<EventDTO> events;
+    List<EventResponseDTO> events;
 
     @Mock
-    ResponseDTO response;
+    RestResponseDTO response;
 
     @Mock
-    EventDTO event;
+    EventResponseDTO event;
+
+    @Mock
+    EventRequestDTO eventRequest;
 
     @InjectMocks
     EventController controller;
@@ -77,61 +81,61 @@ public class EventControllerTest {
 
     @Test
     public void shouldReturnOk_WhenCreateEvent(){
-        when(eventService.createEvent(event)).thenReturn(response);
+        when(eventService.createEvent(eventRequest)).thenReturn(response);
 
-        var actual = controller.createEvent(event);
+        var actual = controller.createEvent(eventRequest);
 
-        verify(eventService).createEvent(event);
+        verify(eventService).createEvent(eventRequest);
         assertEquals(HttpStatus.CREATED , actual.getStatusCode());
         assertNotNull(actual.getBody());
     }
 
     @Test
     public void shouldReturnError_WhenCreateEvent(){
-        when(eventService.createEvent(event)).thenThrow(HttpServerErrorException.InternalServerError.class);
+        when(eventService.createEvent(eventRequest)).thenThrow(HttpServerErrorException.InternalServerError.class);
 
-        assertThrows(HttpServerErrorException.InternalServerError.class, () -> controller.createEvent(event));
+        assertThrows(HttpServerErrorException.InternalServerError.class, () -> controller.createEvent(eventRequest));
 
-        verify(eventService).createEvent(event);
+        verify(eventService).createEvent(eventRequest);
     }
 
     @Test
     public void shouldReturnOk_WhenUpdateEvent(){
-        when(eventService.updateEvent(event)).thenReturn(response);
+        when(eventService.updateEvent(eventRequest)).thenReturn(response);
 
-        var actual = controller.updateEvent(event);
+        var actual = controller.updateEvent(eventRequest);
 
-        verify(eventService).updateEvent(event);
+        verify(eventService).updateEvent(eventRequest);
         assertEquals(HttpStatus.ACCEPTED, actual.getStatusCode());
         assertNotNull(actual.getBody());
     }
 
     @Test
     public void shouldReturnError_WhenUpdateEvent(){
-        when(eventService.updateEvent(event)).thenThrow(HttpServerErrorException.InternalServerError.class);
+        when(eventService.updateEvent(eventRequest)).thenThrow(HttpServerErrorException.InternalServerError.class);
 
-        assertThrows(HttpServerErrorException.InternalServerError.class, () -> controller.updateEvent(event));
+        assertThrows(HttpServerErrorException.InternalServerError.class, () -> controller.updateEvent(eventRequest));
 
-        verify(eventService).updateEvent(event);
+        verify(eventService).updateEvent(eventRequest);
     }
 
     @Test
     public void shouldReturnOk_WhenDeleteEvent(){
-        when(eventService.deleteEvent(event)).thenReturn(response);
+        when(eventService.deleteEvent(eventRequest)).thenReturn(response);
 
-        var actual = controller.deleteEvent(event);
+        var actual = controller.deleteEvent(eventRequest);
 
-        verify(eventService).deleteEvent(event);
+        verify(eventService).deleteEvent(eventRequest);
         assertEquals(HttpStatus.OK, actual.getStatusCode());
         assertNotNull(actual.getBody());
     }
 
     @Test
     public void shouldReturnError_WhenDeleteEvent(){
-        when(eventService.deleteEvent(event)).thenThrow(HttpServerErrorException.InternalServerError.class);
+        when(eventService.deleteEvent(eventRequest)).thenThrow(HttpServerErrorException.InternalServerError.class);
 
-        assertThrows(HttpServerErrorException.InternalServerError.class, () -> controller.deleteEvent(event));
+        assertThrows(HttpServerErrorException.InternalServerError.class, () -> controller.deleteEvent(eventRequest));
 
-        verify(eventService).deleteEvent(event);
+        verify(eventService).deleteEvent(eventRequest);
     }
 }

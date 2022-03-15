@@ -1,7 +1,8 @@
 package com.hype.eventservice.api.event;
 
-import com.hype.eventservice.api.event.dto.EventDTO;
-import com.hype.eventservice.api.event.dto.ResponseDTO;
+import com.hype.eventservice.api.event.dto.EventRequestDTO;
+import com.hype.eventservice.api.event.dto.EventResponseDTO;
+import com.hype.eventservice.api.event.dto.RestResponseDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,35 +21,35 @@ public class EventController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<List<EventDTO>> findAllEvents() {
+    public ResponseEntity<List<EventResponseDTO>> findAllEvents() {
         final var response = service.findAllEvents();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/{eventId}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<EventDTO> findEventById(@PathVariable BigInteger eventId) {
+    public ResponseEntity<EventResponseDTO> findEventById(@PathVariable BigInteger eventId) {
         final var response = service.findEventById(eventId);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<ResponseDTO> createEvent(@RequestBody EventDTO eventDTO) {
+    public ResponseEntity<RestResponseDTO> createEvent(@RequestBody EventRequestDTO eventDTO) {
         final var response = service.createEvent(eventDTO);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @PutMapping
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public ResponseEntity<ResponseDTO> updateEvent(@RequestBody EventDTO eventDTO) {
+    public ResponseEntity<RestResponseDTO> updateEvent(@RequestBody EventRequestDTO eventDTO) {
         final var response = service.updateEvent(eventDTO);
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<ResponseDTO> deleteEvent(@PathVariable EventDTO eventDTO) {
+    public ResponseEntity<RestResponseDTO> deleteEvent(@PathVariable EventRequestDTO eventDTO) {
         final var response = service.deleteEvent(eventDTO);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

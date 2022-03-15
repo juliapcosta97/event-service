@@ -5,8 +5,9 @@ import com.hype.eventservice.api.action.domain.Action;
 import com.hype.eventservice.api.action.domain.ActionRepository;
 import com.hype.eventservice.api.event.domain.Event;
 import com.hype.eventservice.api.event.domain.EventRepository;
-import com.hype.eventservice.api.event.dto.EventDTO;
-import com.hype.eventservice.api.event.dto.ResponseDTO;
+import com.hype.eventservice.api.event.dto.EventRequestDTO;
+import com.hype.eventservice.api.event.dto.EventResponseDTO;
+import com.hype.eventservice.api.event.dto.RestResponseDTO;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,63 +34,63 @@ public class EventService {
     private final EventRepository repository;
     private final ActionRepository actionRepository;
 
-    public List<EventDTO> findAllEvents() {
+    public List<EventResponseDTO> findAllEvents() {
         try {
             var events = repository.findAll();
             actionRepository.save(new Action(GET_LIST));
             repository.resetConnect();
 
-            return events.stream().map(event -> new EventDTO(event))
+            return events.stream().map(event -> new EventResponseDTO(event))
                     .collect(Collectors.toList());
         } catch (Exception ex) {
             throw new RuntimeException(ERROR_MESSAGE, ex);
         }
     }
 
-    public EventDTO findEventById(BigInteger eventId) {
+    public EventResponseDTO findEventById(BigInteger eventId) {
         try {
             var event = repository.findById(eventId);
             var action = new Action(GET_BY_ID);
             actionRepository.save(action);
             repository.resetConnect();
 
-            return new EventDTO(event.get());
+            return new EventResponseDTO(event.get());
         } catch (Exception ex) {
             throw new RuntimeException(ERROR_MESSAGE, ex);
         }
     }
 
-    public ResponseDTO createEvent(EventDTO eventDTO) {
+    public RestResponseDTO createEvent(EventRequestDTO eventDTO) {
         try {
             var event = new Event(eventDTO);
             repository.save(event);
             repository.resetConnect();
 
-            return new ResponseDTO(CREATE_STATUS, CREATE_MESSAGE);
+            return new RestResponseDTO(CREATE_STATUS, CREATE_MESSAGE);
         } catch (Exception ex) {
             throw new RuntimeException(ERROR_MESSAGE, ex);
         }
     }
 
-    public ResponseDTO updateEvent(EventDTO eventDTO) {
+    public RestResponseDTO updateEvent(EventRequestDTO eventDTO) {
         try {
             var event = new Event(eventDTO);
             repository.saveAndFlush(event);
             repository.resetConnect();
 
-            return new ResponseDTO(UPDATE_STATUS, UPDATE_MESSAGE);
+            return new RestResponseDTO(UPDATE_STATUS, UPDATE_MESSAGE);
         } catch (Exception ex) {
             throw new RuntimeException(ERROR_MESSAGE, ex);
         }
     }
 
-    public ResponseDTO deleteEvent(EventDTO eventDTO) {
+    public RestResponseDTO deleteEvent(EventRequestDTO eventDTO) {
         try {
             var event = new Event(eventDTO);
             repository.delete(event);
             repository.resetConnect();
 
-            return new ResponseDTO(DELETE_STATUS, DELETE_MESSAGE);
+            return new RestResponseDTO(DELETE_STATUS, DELETE_MESSAGE);
         } catch (Exception ex) {
             throw new RuntimeException(ERROR_MESSAGE, ex);
         }

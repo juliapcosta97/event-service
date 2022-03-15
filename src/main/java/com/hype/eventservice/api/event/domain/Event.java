@@ -1,6 +1,6 @@
 package com.hype.eventservice.api.event.domain;
 
-import com.hype.eventservice.api.event.dto.EventDTO;
+import com.hype.eventservice.api.event.dto.EventRequestDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -63,7 +63,7 @@ public class Event {
         this.setDateCreated(now);
     }
 
-    public Event(EventDTO event) {
+    public Event(EventRequestDTO event) {
         this.name = event.getName();
         this.artist = event.getArtist();
         this.photo = event.getPhoto();
