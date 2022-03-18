@@ -1,5 +1,5 @@
 # Hype - Event Service
-Aplicação backend para gerenciamento de eventos. 
+Backend application for event management.
 
 ## Spring Boot for Java 11
 ![technology Maven](https://img.shields.io/badge/technology-Maven-blue.svg)
@@ -8,8 +8,8 @@ Aplicação backend para gerenciamento de eventos.
 * Postgres SQL
 
 ## Test
-* Implementação dos testes com Junit e Mockito
-* Executar o comando ```mvn test``` para executar os testes
+* Implementation of tests with Junit and Mockito
+* Run the ```mvn test``` command to run the tests
 
 ## Documentation
 [SWAGGER](https://event-services.herokuapp.com/swagger-ui.html#/event-controller)
