@@ -21,8 +21,11 @@ public class EventController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<List<EventResponseDTO>> findAllEvents() {
-        final var response = service.findAllEvents();
+    public ResponseEntity<List<EventResponseDTO>> findAllEvents(
+            @RequestParam("value") String sortValue,
+            @RequestParam("sort_by") String sortBy,
+            @RequestParam("size") int sizeList) {
+        final var response = service.findAllEvents(sortValue,sortBy,sizeList);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

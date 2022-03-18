@@ -11,6 +11,9 @@ import com.hype.eventservice.api.event.dto.RestResponseDTO;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
@@ -34,9 +37,11 @@ public class EventService {
     private final EventRepository repository;
     private final ActionRepository actionRepository;
 
-    public List<EventResponseDTO> findAllEvents() {
+    public List<EventResponseDTO> findAllEvents(String sortValue, String sortBy, int sizeList) {
         try {
-            var events = repository.findAll();
+            var pageable = buildPageFilter(sortValue,sortBy,sizeList);
+            var events = repository.findAll(pageable);
+
             actionRepository.save(new Action(GET_LIST));
             repository.resetConnect();
 
@@ -45,6 +50,16 @@ public class EventService {
         } catch (Exception ex) {
             throw new RuntimeException(ERROR_MESSAGE, ex);
         }
+    }
+
+    private Pageable buildPageFilter(String sortValue, String sortBy, int sizeList) {
+        Sort sort = Sort.by(sortValue).ascending();
+
+        if(sortBy.equalsIgnoreCase("desc")){
+            sort = Sort.by(sortValue).descending();
+        }
+
+        return PageRequest.of(0,sizeList, sort);
     }
 
     public EventResponseDTO findEventById(BigInteger eventId) {

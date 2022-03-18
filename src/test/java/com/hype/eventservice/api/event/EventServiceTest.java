@@ -9,9 +9,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.math.BigInteger;
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -29,7 +32,7 @@ public class EventServiceTest {
     ActionRepository actionRepository;
 
     @Mock
-    List<Event> events;
+    Page<Event> events;
 
     @Mock
     EventRequestDTO eventDTO;
@@ -41,22 +44,38 @@ public class EventServiceTest {
     EventService service;
 
     @Test
-    public void shouldReturnOk_WhenGetAllEvents(){
-        when(eventRepository.findAll()).thenReturn(events);
+    public void shouldReturnOk_WhenGetAllEventsOrderByAsc(){
+        var pageable = buildPageFilter("dateTime", "asc", 10);
 
-        var actual = service.findAllEvents();
+        when(eventRepository.findAll(pageable)).thenReturn(events);
 
-        verify(eventRepository).findAll();
+        var actual = service.findAllEvents("dateTime", "asc", 10);
+
+        verify(eventRepository).findAll(pageable);
+        assertNotNull(actual);
+    }
+
+    @Test
+    public void shouldReturnOk_WhenGetAllEventsOrderByDesc(){
+        var pageable = buildPageFilter("dateTime", "desc", 10);
+
+        when(eventRepository.findAll(pageable)).thenReturn(events);
+
+        var actual = service.findAllEvents("dateTime", "desc", 10);
+
+        verify(eventRepository).findAll(pageable);
         assertNotNull(actual);
     }
 
     @Test
     public void shouldReturnError_WhenGetAllEvents(){
-        when(eventRepository.findAll()).thenThrow(RuntimeException.class);
+        var pageable = buildPageFilter("dateTime", "asc", 10);
 
-        assertThrows(RuntimeException.class, () -> service.findAllEvents());
+        when(eventRepository.findAll(pageable)).thenThrow(RuntimeException.class);
 
-        verify(eventRepository).findAll();
+        assertThrows(RuntimeException.class, () -> service.findAllEvents("dateTime", "asc", 10));
+
+        verify(eventRepository).findAll(pageable);
     }
 
     @Test
@@ -116,5 +135,15 @@ public class EventServiceTest {
         var actual = service.deleteEvent(eventDTO);
 
         assertNotNull(actual);
+    }
+
+    public Pageable buildPageFilter(String sortValue, String sortBy, int sizeList) {
+        Sort sort = Sort.by(sortValue).ascending();
+
+        if(sortBy.equalsIgnoreCase("desc")){
+            sort = Sort.by(sortValue).descending();
+        }
+
+        return PageRequest.of(0,sizeList, sort);
     }
 }

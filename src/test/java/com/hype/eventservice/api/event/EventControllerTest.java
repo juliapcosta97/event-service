@@ -41,22 +41,22 @@ public class EventControllerTest {
 
     @Test
     public void shouldReturnOk_WhenGetAllEvents(){
-        when(eventService.findAllEvents()).thenReturn(events);
+        when(eventService.findAllEvents("dateTime", "asc", 10)).thenReturn(events);
 
-        var actual = controller.findAllEvents();
+        var actual = controller.findAllEvents("dateTime", "asc", 10);
 
-        verify(eventService).findAllEvents();
+        verify(eventService).findAllEvents("dateTime", "asc", 10);
         assertEquals(HttpStatus.OK, actual.getStatusCode());
         assertNotNull(actual.getBody());
     }
 
     @Test
     public void shouldReturnError_WhenGetAllEvents(){
-        when(eventService.findAllEvents()).thenThrow(HttpServerErrorException.InternalServerError.class);
+        when(eventService.findAllEvents("dateTime", "asc", 10)).thenThrow(HttpServerErrorException.InternalServerError.class);
 
-        assertThrows(HttpServerErrorException.InternalServerError.class, () -> controller.findAllEvents());
+        assertThrows(HttpServerErrorException.InternalServerError.class, () -> controller.findAllEvents("dateTime", "asc", 10));
 
-        verify(eventService).findAllEvents();
+        verify(eventService).findAllEvents("dateTime", "asc", 10);
     }
 
     @Test
