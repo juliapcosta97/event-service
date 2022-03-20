@@ -43,7 +43,6 @@ public class EventService {
             var events = repository.findAll(pageable);
 
             actionRepository.save(new Action(GET_LIST));
-            repository.resetConnect();
 
             return events.stream().map(event -> new EventResponseDTO(event))
                     .collect(Collectors.toList());
@@ -52,22 +51,11 @@ public class EventService {
         }
     }
 
-    private Pageable buildPageFilter(String sortValue, String sortBy, int sizeList) {
-        Sort sort = Sort.by(sortValue).ascending();
-
-        if(sortBy.equalsIgnoreCase("desc")){
-            sort = Sort.by(sortValue).descending();
-        }
-
-        return PageRequest.of(0,sizeList, sort);
-    }
-
     public EventResponseDTO findEventById(BigInteger eventId) {
         try {
             var event = repository.findById(eventId);
             var action = new Action(GET_BY_ID);
             actionRepository.save(action);
-            repository.resetConnect();
 
             return new EventResponseDTO(event.get());
         } catch (Exception ex) {
@@ -79,7 +67,6 @@ public class EventService {
         try {
             var event = new Event(eventDTO);
             repository.save(event);
-            repository.resetConnect();
 
             return new RestResponseDTO(CREATE_STATUS, CREATE_MESSAGE);
         } catch (Exception ex) {
@@ -91,7 +78,6 @@ public class EventService {
         try {
             var event = new Event(eventDTO);
             repository.save(event);
-            repository.resetConnect();
 
             var updateResponse = repository.findById(eventDTO.getId())
                     .map(record -> {
@@ -119,11 +105,20 @@ public class EventService {
         try {
             var event = repository.findById(eventDTO.getId());
             repository.delete(event.get());
-            repository.resetConnect();
 
             return new RestResponseDTO(DELETE_STATUS, DELETE_MESSAGE);
         } catch (Exception ex) {
             throw new RuntimeException(ERROR_MESSAGE, ex);
         }
+    }
+
+    private Pageable buildPageFilter(String sortValue, String sortBy, int sizeList) {
+        Sort sort = Sort.by(sortValue).ascending();
+
+        if(sortBy.equalsIgnoreCase("desc")){
+            sort = Sort.by(sortValue).descending();
+        }
+
+        return PageRequest.of(0,sizeList, sort);
     }
 }
