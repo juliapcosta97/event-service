@@ -5,6 +5,8 @@ import com.hype.eventservice.api.event.dto.EventResponseDTO;
 import com.hype.eventservice.api.event.dto.RestResponseDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +21,7 @@ public class EventController {
 
     private final EventService service;
 
+    @Cacheable("events")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<EventResponseDTO>> findAllEvents(
@@ -29,6 +32,7 @@ public class EventController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @Cacheable("events")
     @GetMapping("/{eventId}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<EventResponseDTO> findEventById(@PathVariable BigInteger eventId) {
@@ -36,6 +40,7 @@ public class EventController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @CacheEvict("events")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<RestResponseDTO> createEvent(@RequestBody EventRequestDTO eventDTO) {
@@ -43,6 +48,7 @@ public class EventController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
+    @CacheEvict("events")
     @PutMapping
     @ResponseStatus(HttpStatus.ACCEPTED)
     public ResponseEntity<RestResponseDTO> updateEvent(@RequestBody EventRequestDTO eventDTO) {
@@ -50,6 +56,7 @@ public class EventController {
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
 
+    @CacheEvict("events")
     @DeleteMapping
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<RestResponseDTO> deleteEvent(@RequestBody EventRequestDTO eventDTO) {
