@@ -50,10 +50,10 @@ public class EventController {
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{eventId}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<RestResponseDTO> deleteEvent(@RequestBody EventRequestDTO eventDTO) {
-        final var response = service.deleteEvent(eventDTO);
+    public ResponseEntity<RestResponseDTO> deleteEvent(@PathVariable BigInteger eventId) {
+        final var response = service.deleteEvent(eventId);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

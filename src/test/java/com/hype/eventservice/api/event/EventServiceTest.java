@@ -114,7 +114,7 @@ public class EventServiceTest {
 
     @Test
     public void shouldReturnOk_WhenUpdateEvent(){
-        when(this.eventRepository.findById(eventDTO.getId())).thenReturn(Optional.of(event));
+        when(eventRepository.findById(eventDTO.getId())).thenReturn(Optional.of(event));
 
         var actual = service.updateEvent(eventDTO);
 
@@ -123,16 +123,16 @@ public class EventServiceTest {
 
     @Test
     public void shouldReturnError_WhenUpdateEvent(){
-        when(eventRepository.save(event)).thenThrow(RuntimeException.class);
+        when(eventRepository.findById(eventDTO.getId())).thenThrow(RuntimeException.class);
 
         assertThrows(RuntimeException.class, () -> service.updateEvent(eventDTO));
     }
 
     @Test
     public void shouldReturnOk_WhenDeleteEvent(){
-        when(this.eventRepository.findById(eventDTO.getId())).thenReturn(Optional.of(event));
+        when(eventRepository.findById(BigInteger.ONE)).thenReturn(Optional.of(event));
 
-        var actual = service.deleteEvent(eventDTO);
+        var actual = service.deleteEvent(BigInteger.ONE);
 
         assertNotNull(actual);
     }

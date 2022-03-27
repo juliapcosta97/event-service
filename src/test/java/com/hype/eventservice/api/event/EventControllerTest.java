@@ -121,21 +121,21 @@ public class EventControllerTest {
 
     @Test
     public void shouldReturnOk_WhenDeleteEvent(){
-        when(eventService.deleteEvent(eventRequest)).thenReturn(response);
+        when(eventService.deleteEvent(BigInteger.ONE)).thenReturn(response);
 
-        var actual = controller.deleteEvent(eventRequest);
+        var actual = controller.deleteEvent(BigInteger.ONE);
 
-        verify(eventService).deleteEvent(eventRequest);
+        verify(eventService).deleteEvent(BigInteger.ONE);
         assertEquals(HttpStatus.OK, actual.getStatusCode());
         assertNotNull(actual.getBody());
     }
 
     @Test
     public void shouldReturnError_WhenDeleteEvent(){
-        when(eventService.deleteEvent(eventRequest)).thenThrow(HttpServerErrorException.InternalServerError.class);
+        when(eventService.deleteEvent(BigInteger.ONE)).thenThrow(HttpServerErrorException.InternalServerError.class);
 
-        assertThrows(HttpServerErrorException.InternalServerError.class, () -> controller.deleteEvent(eventRequest));
+        assertThrows(HttpServerErrorException.InternalServerError.class, () -> controller.deleteEvent(BigInteger.ONE));
 
-        verify(eventService).deleteEvent(eventRequest);
+        verify(eventService).deleteEvent(BigInteger.ONE);
     }
 }

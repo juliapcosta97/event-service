@@ -77,7 +77,6 @@ public class EventService {
     public RestResponseDTO updateEvent(EventRequestDTO eventDTO) {
         try {
             var event = new Event(eventDTO);
-            repository.save(event);
 
             var updateResponse = repository.findById(eventDTO.getId())
                     .map(record -> {
@@ -101,9 +100,9 @@ public class EventService {
         }
     }
 
-    public RestResponseDTO deleteEvent(EventRequestDTO eventDTO) {
+    public RestResponseDTO deleteEvent(BigInteger eventId) {
         try {
-            var event = repository.findById(eventDTO.getId());
+            var event = repository.findById(eventId);
             repository.delete(event.get());
 
             return new RestResponseDTO(DELETE_STATUS, DELETE_MESSAGE);
