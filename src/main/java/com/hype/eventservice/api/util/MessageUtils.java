@@ -5,7 +5,7 @@ public class MessageUtils {
     public static final String CREATE_MESSAGE = "Created with success";
     public static final String UPDATE_MESSAGE = "Updated with success";
     public static final String DELETE_MESSAGE = "Deleted with success";
-    public static final String ERROR_MESSAGE = "Error on database";
+    public static final String ERROR_MESSAGE = "Error on process request";
     public static final String CREATE_STATUS = "created";
     public static final String UPDATE_STATUS = "updated";
     public static final String DELETE_STATUS = "deleted";
