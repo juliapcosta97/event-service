@@ -6,7 +6,10 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.util.NoSuchElementException;
+
 import static com.hype.eventservice.api.util.MessageUtils.ERROR_MESSAGE;
+import static com.hype.eventservice.api.util.MessageUtils.NOT_FOUND_ERROR_MESSAGE;
 
 @ControllerAdvice
 public class AppExceptionHandler extends ResponseEntityExceptionHandler {
@@ -15,5 +18,11 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<?> handlerException(Exception e){
         DefaultError error = new DefaultError(HttpStatus.BAD_GATEWAY.value(), ERROR_MESSAGE);
         return new ResponseEntity<>(error, HttpStatus.BAD_GATEWAY);
+    }
+
+    @ExceptionHandler({NoSuchElementException.class, NullPointerException.class})
+    public ResponseEntity<?> notFoundHandlerException(Exception e){
+        DefaultError error = new DefaultError(HttpStatus.NOT_FOUND.value(), NOT_FOUND_ERROR_MESSAGE);
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 }
