@@ -46,6 +46,15 @@ public class Event {
     private String link;
 
     @Column
+    private String genre;
+
+    @Column
+    private String type;
+
+    @Column
+    private String reference;
+
+    @Column
     private ZonedDateTime dateTime;
 
     @Column(nullable = false)
@@ -70,5 +79,8 @@ public class Event {
         this.link = event.getLink();
         this.dateTime = event.getDateTime();
         this.dateUpdated = ZonedDateTime.now();
+        this.genre = event.getGenre();
+        this.type = event.getType();
+        this.reference = event.getReference();
     }
 }

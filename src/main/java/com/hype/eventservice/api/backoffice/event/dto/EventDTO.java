@@ -19,4 +19,7 @@ public class EventDTO {
     private String city;
     private String location;
     private String link;
+    private String genre;
+    private String type;
+    private String reference;
 }
