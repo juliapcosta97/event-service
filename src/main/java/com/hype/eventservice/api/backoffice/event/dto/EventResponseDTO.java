@@ -35,5 +35,6 @@ public class EventResponseDTO extends EventDTO {
         this.setDate(event.getDateTime());
         this.setHour(event.getDateTime());
         this.setArtists(event.getArtists());
+        this.setMaps(event.getMaps());
     }
 }

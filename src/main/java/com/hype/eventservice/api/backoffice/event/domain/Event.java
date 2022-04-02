@@ -48,6 +48,8 @@ public class Event {
     @Column(nullable = false)
     private String location;
 
+    private String maps;
+
     @Column
     private String link;
 
@@ -88,6 +90,6 @@ public class Event {
         this.genre = event.getGenre();
         this.type = event.getType();
         this.reference = event.getReference();
-        this.artists = event.getArtists();
+        this.maps = event.getMaps();
     }
 }

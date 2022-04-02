@@ -1,7 +1,5 @@
 package com.hype.eventservice.api.backoffice.event;
 
-
-import com.hype.eventservice.api.backoffice.artist.domain.ArtistRepository;
 import com.hype.eventservice.api.backoffice.event.domain.Event;
 import com.hype.eventservice.api.backoffice.event.domain.EventRepository;
 import com.hype.eventservice.api.backoffice.event.dto.EventRequestDTO;
@@ -61,6 +59,10 @@ public class EventService {
                     record.setCity(event.getCity());
                     record.setLocation(event.getLocation());
                     record.setLink(event.getLink());
+                    record.setGenre(event.getGenre());
+                    record.setReference(event.getReference());
+                    record.setType(event.getType());
+                    record.setMaps(event.getMaps());
                     record.setDateTime(event.getDateTime());
                     repository.save(record);
 

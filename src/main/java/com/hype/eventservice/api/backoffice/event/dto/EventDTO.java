@@ -1,12 +1,10 @@
 package com.hype.eventservice.api.backoffice.event.dto;
 
-import com.hype.eventservice.api.backoffice.artist.domain.Artist;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigInteger;
-import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -24,4 +22,5 @@ public class EventDTO {
     private String genre;
     private String type;
     private String reference;
+    private String maps;
 }
