@@ -6,7 +6,6 @@ import com.hype.eventservice.api.backoffice.event.dto.EventResponseDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +20,8 @@ public class EventController {
 
     private final EventService service;
 
-    @Cacheable("events")
+//    @Cacheable("events")
+    @CacheEvict("events")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<EventResponseDTO>> findAllEvents(
@@ -32,7 +32,8 @@ public class EventController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @Cacheable("events")
+//    @Cacheable("events")
+    @CacheEvict("events")
     @GetMapping("/{eventId}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<EventResponseDTO> findEventById(@PathVariable BigInteger eventId) {
