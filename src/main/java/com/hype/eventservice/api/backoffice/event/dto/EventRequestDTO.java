@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigInteger;
 import java.time.ZonedDateTime;
 
 @Data
@@ -14,4 +15,6 @@ public class EventRequestDTO extends EventDTO {
 
     @JsonProperty(value = "date_time")
     private ZonedDateTime dateTime;
+
+    private BigInteger artistId;
 }

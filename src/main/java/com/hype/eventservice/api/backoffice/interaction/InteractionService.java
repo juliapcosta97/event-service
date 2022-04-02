@@ -3,7 +3,6 @@ package com.hype.eventservice.api.backoffice.interaction;
 import com.hype.eventservice.api.backoffice.common.domain.User;
 import com.hype.eventservice.api.backoffice.common.domain.UserRepository;
 import com.hype.eventservice.api.backoffice.common.dto.RestResponseDTO;
-import com.hype.eventservice.api.backoffice.event.domain.Event;
 import com.hype.eventservice.api.backoffice.event.domain.EventRepository;
 import com.hype.eventservice.api.backoffice.interaction.domain.Interaction;
 import com.hype.eventservice.api.backoffice.interaction.domain.InteractionRepository;

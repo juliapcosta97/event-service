@@ -1,6 +1,5 @@
 package com.hype.eventservice.api.backoffice.event;
 
-import com.hype.eventservice.api.backoffice.common.domain.ActionRepository;
 import com.hype.eventservice.api.backoffice.event.domain.Event;
 import com.hype.eventservice.api.backoffice.event.domain.EventRepository;
 import com.hype.eventservice.api.backoffice.event.dto.EventRequestDTO;
@@ -27,9 +26,6 @@ public class EventServiceTest {
 
     @Mock
     EventRepository eventRepository;
-
-    @Mock
-    ActionRepository actionRepository;
 
     @Mock
     Page<Event> events;

@@ -1,5 +1,6 @@
 package com.hype.eventservice.api.backoffice.event.domain;
 
+import com.hype.eventservice.api.backoffice.artist.domain.Artist;
 import com.hype.eventservice.api.backoffice.event.dto.EventRequestDTO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,8 +12,10 @@ import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Column;
+import javax.persistence.ManyToMany;
 import java.math.BigInteger;
 import java.time.ZonedDateTime;
+import java.util.List;
 
 @Data
 @Entity
@@ -30,6 +33,9 @@ public class Event {
     @Column(nullable = false)
     private String artist;
 
+    @ManyToMany
+    private List<Artist> artists;
+
     @Column
     private String photo;
 
@@ -41,6 +47,8 @@ public class Event {
 
     @Column(nullable = false)
     private String location;
+
+    private String maps;
 
     @Column
     private String link;
@@ -82,5 +90,6 @@ public class Event {
         this.genre = event.getGenre();
         this.type = event.getType();
         this.reference = event.getReference();
+        this.maps = event.getMaps();
     }
 }

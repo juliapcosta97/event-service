@@ -1,18 +1,13 @@
 package com.hype.eventservice.api.backoffice.event;
 
-
-import com.hype.eventservice.api.backoffice.common.domain.Action;
-import com.hype.eventservice.api.backoffice.common.domain.ActionRepository;
 import com.hype.eventservice.api.backoffice.event.domain.Event;
 import com.hype.eventservice.api.backoffice.event.domain.EventRepository;
 import com.hype.eventservice.api.backoffice.event.dto.EventRequestDTO;
 import com.hype.eventservice.api.backoffice.event.dto.EventResponseDTO;
 import com.hype.eventservice.api.backoffice.common.dto.RestResponseDTO;
+import com.hype.eventservice.api.util.PageableUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
@@ -25,29 +20,22 @@ import static com.hype.eventservice.api.util.MessageUtils.UPDATE_MESSAGE;
 import static com.hype.eventservice.api.util.MessageUtils.UPDATE_STATUS;
 import static com.hype.eventservice.api.util.MessageUtils.DELETE_MESSAGE;
 import static com.hype.eventservice.api.util.MessageUtils.DELETE_STATUS;
-import static com.hype.eventservice.api.util.MessageUtils.GET_LIST;
-import static com.hype.eventservice.api.util.MessageUtils.GET_BY_ID;
 
 @Service
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class EventService {
 
     private final EventRepository repository;
-    private final ActionRepository actionRepository;
 
     public List<EventResponseDTO> findAllEvents(String sortValue, String sortBy, int sizeList) {
-        var pageable = buildPageFilter(sortValue,sortBy,sizeList);
+        var pageable = PageableUtils.buildPageFilter(sortValue,sortBy,sizeList);
         var events = repository.findAll(pageable);
-
-        actionRepository.save(new Action(GET_LIST));
 
         return events.stream().map(event -> new EventResponseDTO(event)).collect(Collectors.toList());
     }
 
     public EventResponseDTO findEventById(BigInteger eventId) {
         var event = repository.findById(eventId);
-        var action = new Action(GET_BY_ID);
-        actionRepository.save(action);
 
         return new EventResponseDTO(event.get());
     }
@@ -64,7 +52,6 @@ public class EventService {
 
         var updateResponse = repository.findById(eventDTO.getId())
                 .map(record -> {
-                    record.setName(eventDTO.getName());
                     record.setName(event.getName());
                     record.setArtist(event.getArtist());
                     record.setPhoto(event.getPhoto());
@@ -72,6 +59,10 @@ public class EventService {
                     record.setCity(event.getCity());
                     record.setLocation(event.getLocation());
                     record.setLink(event.getLink());
+                    record.setGenre(event.getGenre());
+                    record.setReference(event.getReference());
+                    record.setType(event.getType());
+                    record.setMaps(event.getMaps());
                     record.setDateTime(event.getDateTime());
                     repository.save(record);
 
@@ -86,15 +77,5 @@ public class EventService {
         repository.delete(event.get());
 
         return new RestResponseDTO(DELETE_STATUS, DELETE_MESSAGE);
-    }
-
-    private Pageable buildPageFilter(String sortValue, String sortBy, int sizeList) {
-        Sort sort = Sort.by(sortValue).ascending();
-
-        if(sortBy.equalsIgnoreCase("desc")){
-            sort = Sort.by(sortValue).descending();
-        }
-
-        return PageRequest.of(0,sizeList, sort);
     }
 }

@@ -5,7 +5,7 @@ Backend application for event management.
 ![technology Maven](https://img.shields.io/badge/technology-Maven-blue.svg)
 
 ## Storage
-* Postgres SQL
+* MySQL
 
 ## Test
 * Implementation of tests with Junit and Mockito

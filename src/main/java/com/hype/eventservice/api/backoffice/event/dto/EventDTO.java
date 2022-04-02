@@ -22,4 +22,5 @@ public class EventDTO {
     private String genre;
     private String type;
     private String reference;
+    private String maps;
 }

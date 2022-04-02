@@ -1,8 +1,7 @@
-package com.hype.eventservice.api.backoffice.event;
+package com.hype.eventservice.api.backoffice.artist;
 
+import com.hype.eventservice.api.backoffice.artist.dto.ArtistDTO;
 import com.hype.eventservice.api.backoffice.common.dto.RestResponseDTO;
-import com.hype.eventservice.api.backoffice.event.dto.EventRequestDTO;
-import com.hype.eventservice.api.backoffice.event.dto.EventResponseDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -16,51 +15,51 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor(onConstructor = @__(@Autowired))
-@RequestMapping(value = "/events")
-public class EventController {
+@RequestMapping(value = "/artists")
+public class ArtistController {
 
-    private final EventService service;
+    private final ArtistService service;
 
-    @Cacheable("events")
+    @Cacheable("artists")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<List<EventResponseDTO>> findAllEvents(
+    public ResponseEntity<List<ArtistDTO>> findAllArtists(
             @RequestParam("value") String sortValue,
             @RequestParam("sort_by") String sortBy,
             @RequestParam("size") int sizeList) {
-        final var response = service.findAllEvents(sortValue,sortBy,sizeList);
+        final var response = service.findAllArtists(sortValue,sortBy,sizeList);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @Cacheable("events")
-    @GetMapping("/{eventId}")
+    @Cacheable("artists")
+    @GetMapping("/{artistId}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<EventResponseDTO> findEventById(@PathVariable BigInteger eventId) {
-        final var response = service.findEventById(eventId);
+    public ResponseEntity<ArtistDTO> findArtistById(@PathVariable BigInteger artistId) {
+        final var response = service.findArtistById(artistId);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @CacheEvict("events")
+    @CacheEvict("artists")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<RestResponseDTO> createEvent(@RequestBody EventRequestDTO eventDTO) {
-        final var response = service.createEvent(eventDTO);
+    public ResponseEntity<RestResponseDTO> createArtist(@RequestBody ArtistDTO artistDTO) {
+        final var response = service.createArtist(artistDTO);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @CacheEvict("events")
+    @CacheEvict("artists")
     @PutMapping
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public ResponseEntity<RestResponseDTO> updateEvent(@RequestBody EventRequestDTO eventDTO) {
-        final var response = service.updateEvent(eventDTO);
+    public ResponseEntity<RestResponseDTO> updateArtist(@RequestBody ArtistDTO artistDTO) {
+        final var response = service.updateArtist(artistDTO);
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
 
-    @CacheEvict("events")
+    @CacheEvict("artists")
     @DeleteMapping
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<RestResponseDTO> deleteEvent(@RequestBody BigInteger eventId) {
-        final var response = service.deleteEvent(eventId);
+    public ResponseEntity<RestResponseDTO> deleteArtist(@RequestBody BigInteger artistId) {
+        final var response = service.deleteArtist(artistId);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
