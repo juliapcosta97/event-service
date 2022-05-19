@@ -97,6 +97,11 @@
                     </excludes>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>appengine-maven-plugin</artifactId>
+                <version>2.4.2</version>
+            </plugin>
         </plugins>
     </build>
 
